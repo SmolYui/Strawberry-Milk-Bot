@@ -26,6 +26,7 @@ export default (client: Client) => {
         data[0].send({
             content: data[1].replace(/@/g, `<@${id}>`)
         })
+        console.log(`[${guild?.name}] sent welcome message`) 
     })
 }
 export const config = {

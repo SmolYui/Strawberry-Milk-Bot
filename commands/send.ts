@@ -25,6 +25,7 @@ export default {
 
         const text = args.join(' ')
 
+        console.log(`[${message?.guild?.name}][${channel.name}] Sending "${text}")`) 
         channel.send(text)
         if (interaction){
             interaction.reply({

@@ -44,6 +44,7 @@ export default {
             text = args.join(' ')
         }
 
+        console.log(`[${message?.guild?.name}] setting welcome message to "${text}"`) 
         await welcomeSchema.findOneAndUpdate({
             _id: guild.id 
         }, {

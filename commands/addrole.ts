@@ -37,6 +37,7 @@ export default{
                     member.roles.add(id)
                 }
 
+                console.log(`[${member?.guild.name}] updated roles for ${member.nickname} `) 
                 interaction.reply({
                     content: 'Roles updated!',
                     ephemeral: true
@@ -112,10 +113,10 @@ export default{
         }targetMessage.edit({
             components: [row]
         })
-
+        console.log(`[${message?.guild?.name}]Added <@${role.name}> to message`)
         return {
             custom: true,
-            content: `Added <@${role.id}> to the auto roles menu.`,
+            content: `Added ${role.id} to the auto roles menu.`,
             allowedMentions:{
                 roles: []
             },
