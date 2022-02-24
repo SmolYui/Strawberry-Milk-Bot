@@ -116,10 +116,7 @@ export default{
         console.log(`[${message?.guild?.name}]Added <@${role.name}> to message`)
         return {
             custom: true,
-            content: `Added ${role.id} to the auto roles menu.`,
-            allowedMentions:{
-                roles: []
-            },
+            content: `Added \`${role.name}\`to the auto roles menu.`,
             ephemeral: true
         }
     }
