@@ -1,6 +1,4 @@
-# Strawberry Milk Bot
-
-
+![Strawberry Milk Bot](/Assets/StrawberryMilk_banner.png)
 A cute multipurpose discord bot being developed by Yui#0001
 
 
