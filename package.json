@@ -1,0 +1,20 @@
+{
+  "name": "strawberry-milk-bot",
+  "version": "1.0.0",
+  "description": "A Multi-purpose Discord bot by Yui#0001",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^13.6.0",
+    "dotenv": "^16.0.0",
+    "mongoose": "^6.2.2",
+    "nodemon": "^2.0.15",
+    "wokcommands": "^1.5.3"
+  }
+}
