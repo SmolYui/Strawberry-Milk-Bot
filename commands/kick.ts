@@ -27,7 +27,7 @@ export default {
         args.shift()
         const reason = args.join(' ')
         
-        console.log(`[${message?.guild?.name}] Kicking ${target.nickname}(${target.id})`) 
+        console.log(`[${message?.guild?.name}] Kicking ${target.displayName}(${target.id})`) 
         target.send(`You were kicked from ${target.guild.name} for "${reason}"`)
         target.kick(reason)
 

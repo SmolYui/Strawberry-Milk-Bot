@@ -37,7 +37,7 @@ export default{
                     member.roles.add(id)
                 }
 
-                console.log(`[${member?.guild.name}] updated roles for ${member.nickname} `) 
+                console.log(`[${member?.guild.name}] updated roles for ${member.displayName} `) 
                 interaction.reply({
                     content: 'Roles updated!',
                     ephemeral: true

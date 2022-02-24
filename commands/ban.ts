@@ -27,7 +27,7 @@ export default {
         args.shift()
         const reason = args.join(' ')
         
-        console.log(`[${message?.guild?.name}] Banning ${target.nickname}(${target.id})`) 
+        console.log(`[${message?.guild?.name}] Banning ${target.displayName}(${target.id})`) 
         target.send(`You were banned from ${target.guild.name} for "${reason}"`)
         target.ban({
             reason,
