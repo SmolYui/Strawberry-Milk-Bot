@@ -1,4 +1,4 @@
-import { GuildEmoji } from "discord.js";
+import { Channel, GuildEmoji, User } from "discord.js";
 import { ICommand } from "wokcommands";
 import balSchema from "../models/bal-schema";
 
@@ -7,13 +7,18 @@ export default {
     category: 'Currency',
     description: 'Shows users balance',
 
-    slash:'both',
+    minArgs: 0,
+    maxArgs: 1,
+    expectedArgs: '<user>',
+    expectedArgsTypes: ['USER'],
+
+    slash:true,
     testOnly:true,
 
-    callback: async ( {message,interaction})=>{
-        const guild = message ? message.guild! : interaction.guild!
-        const member = message ? message.member! : interaction.member!
-        const key = String(String(guild.id) + String(member.user.id))
+    callback: async ( {interaction, args})=>{
+        const guild = interaction.guild!
+        const user = interaction.options.getUser('user')||interaction.member!.user
+        const key = String(String(guild.id) + String(user.id))
 
 
 
@@ -28,15 +33,20 @@ export default {
                 },{
                     upsert: true
                 })
-                return `<@${member.user.id}> Balance: 0`
+                interaction.reply({
+
+                content:`<@${user.id}> Balance: 0`,
+                allowedMentions: { "parse": [] },
+            })
             }
 
             let currentBal = results.value
 
+        interaction.reply({
 
-
-        return `<@${member.user.id}> Balance: ${currentBal}`
-            
-        
+            content:`<@${user.id}> Balance: ${currentBal}`,
+            allowedMentions: { "parse": [] },
+        })    
+        return
     }
 } as ICommand
