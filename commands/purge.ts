@@ -12,23 +12,23 @@ export default {
     expectedArgs: '[amount]',
     expectedArgsTypes: ['INTEGER'],
 
-    slash: 'both',
+    slash: true,
     testOnly: true,
 
-    callback: async ({message, interaction, channel, args}) => {
-        const amount = parseInt(args.shift()!)
-
-        if (message){
-            await message.delete()
-        }
+    callback: async ({interaction, channel}) => {
+        const amount = interaction.options.getInteger('amount')!
 
         const {size} = await channel.bulkDelete(amount, true)
 
-        const reply = `Deleted ${size} message${size > 1 ? 's':''}.`
+        const replyContent = `Deleted ${size} message${size > 1 ? 's':''}.`
 
-        if (interaction){
-            return reply
-        }
+        interaction.reply({
+            content:replyContent,
+            ephemeral: true
+        })
+
+        console.log(`[${interaction.guild?.name}][${channel.name}] ${interaction.user.username + interaction.user.discriminator}(${interaction.user.id}) purged ${size} message${size > 1 ? 's':''}.`)
+        return
     }
 
 } as ICommand

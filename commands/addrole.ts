@@ -12,7 +12,7 @@ export default{
     expectedArgs: '<channel> <messageId> <role>',
     expectedArgsTypes: ['CHANNEL', 'STRING', 'ROLE'],
 
-    slash: 'both',
+    slash: true,
     testOnly: true,
     guildOnly: true,
 
@@ -47,17 +47,25 @@ export default{
         })
     },
 
-    callback: async ({client, message, interaction, args}) => {
-        const channel = (message ? message.mentions.channels.first() : interaction.options.getChannel('channel')) as TextChannel
-        if (!channel || channel.type !== 'GUILD_TEXT'){
-            return 'Please tag a text channel.'
+    callback: async ({client, interaction,guild}) => {
+        const channel = interaction.options.getChannel('channel') as TextChannel
+        if (!channel || channel.type !== 'GUILD_TEXT'){   
+            interaction.reply({
+                content: 'Please tag a text channel.',
+                ephemeral: true
+            })
+            return
         }
 
-        const messageId = args[1]
+        const messageId = String(interaction.options.getInteger('messageId'))
 
-        const role = (message ? message.mentions.roles.first() : interaction.options.getRole('role')) as Role
+        const role = (interaction.options.getRole('role')) as Role
         if (!Role){
-            return 'Unkown role!'
+            interaction.reply({
+                content: 'Unknown Role.',
+                ephemeral: true
+            })
+            return
         }
 
         const targetMessage = await channel.messages.fetch(messageId,{
@@ -66,11 +74,19 @@ export default{
         })
 
         if (!targetMessage){
-            return 'Unknown message ID.'
+            interaction.reply({
+                content: 'Unknown MessageID',
+                ephemeral: true
+            })
+            return
         }
 
         if(targetMessage.author.id !== client.user?.id){
-            return `Please provide a message ID that was sent from <@${client.user?.id}>`
+            interaction.reply({
+                content: `Please provide a message ID that was sent from <@${client.user?.id}>`,
+                ephemeral: true
+            })
+            return
         }
 
         let row = targetMessage.components[0] as MessageActionRow
@@ -113,7 +129,7 @@ export default{
         }targetMessage.edit({
             components: [row]
         })
-        console.log(`[${message?.guild?.name}]Added <@${role.name}> to message`)
+        console.log(`[${guild?.name}][${channel.name}][${messageId}] Added <@${role.name}> to message`)
         return {
             custom: true,
             content: `Added \`${role.name}\`to the auto roles menu.`,

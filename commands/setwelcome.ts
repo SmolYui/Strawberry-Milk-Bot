@@ -10,7 +10,7 @@ export default {
     minArgs: 2,
     expectedArgs: '<channel> <text>',
 
-    slash: 'both',
+    slash: true,
     testOnly: true,
 
     options: [
@@ -28,23 +28,19 @@ export default {
         }
     ],
 
-    callback: async ({ guild, message, interaction, args}) => {
+    callback: async ({ guild, interaction}) => {
         if (!guild){
             return 'Please use this command within a server.'
         }
 
-        const target = message ? message.mentions.channels.first() : interaction.options.getChannel('channel')
+        const target = interaction.options.getChannel('channel')
         if (!target || target.type !== 'GUILD_TEXT'){
             return 'Please tag a text channel.'
         }
 
         let text = interaction?.options.getString('text')
-        if (message){
-            args.shift()
-            text = args.join(' ')
-        }
 
-        console.log(`[${message?.guild?.name}] setting welcome message to "${text}"`) 
+        console.log(`[${interaction?.guild?.name}] setting welcome message to "${text}"`) 
         await welcomeSchema.findOneAndUpdate({
             _id: guild.id 
         }, {
@@ -54,7 +50,10 @@ export default {
         },{
             upsert: true
         })
-
-        return "Welcome channel set!"
+        interaction.reply({
+            content:'Welcome channel & message set!',
+            allowedMentions: { "parse": [] },
+            ephemeral: true
+        })
     }
 } as ICommand

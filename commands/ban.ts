@@ -7,32 +7,35 @@ export default {
 
     requireRoles: true,
 
-    slash: 'both',
+    slash: true,
     testOnly: true,
 
     minArgs: 2,
     expectedArgs: '<user> <reason>',
     expectedArgsTypes: ['USER','STRING'],
 
-    callback: ({message, interaction, args}) => {
-        const target = message ? message.mentions.members?.first() : interaction.options.getMember('user') as GuildMember
+    callback: ({interaction}) => {
+        const target = interaction.options.getMember('user') as GuildMember
         if (!target){
             return 'Please tag someone to ban.'
         }
 
         if (!target.bannable){
-            return 'Cannot kick that user.'
+            return 'Cannot ban that user.'
         }
-
-        args.shift()
-        const reason = args.join(' ')
+        const reason = interaction.options.getString('reason')||"no reason given"
         
-        console.log(`[${message?.guild?.name}] Banning ${target.displayName}(${target.id})`) 
+        console.log(`[${interaction?.guild?.name}] Banning ${target.displayName}(${target.id})`) 
         target.send(`You were banned from ${target.guild.name} for "${reason}"`)
         target.ban({
             reason,
         })
         
-        return `You banned <@${target.id}>`
+        interaction.reply({
+            content:`You banned <@${target.id}>`,
+            allowedMentions: { "parse": [] },
+            ephemeral: true
+        })
+        return
     }
 } as ICommand

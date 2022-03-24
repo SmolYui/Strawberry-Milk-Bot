@@ -11,21 +11,20 @@ export default {
     expectedArgs: '<channel> <text>',
     expectedArgsTypes: ['CHANNEL','STRING'],
 
-    slash: 'both',
+    slash: true,
     testOnly: true,
     guildOnly: true,
 
-    callback: ({message, interaction, args}) => {
-        const channel = (message ? message.mentions.channels.first() : interaction.options.getChannel('channel')) as TextChannel
+    callback: ({interaction}) => {
+        const channel = interaction.options.getChannel('channel') as TextChannel
         if (!channel || channel.type !== 'GUILD_TEXT'){
-            return 'Please tag a text channel.'
+            interaction.reply({
+                content: 'Please tag a text channel',
+                ephemeral: true,
+            })
         }
-
-        args.shift()
-
-        const text = args.join(' ')
-
-        console.log(`[${message?.guild?.name}][${channel.name}] Sending "${text}")`) 
+        const text = interaction.options.getString('text') || ""
+        console.log(`[${interaction.guild?.name}][${channel.name}] Sending <@${text}>`)
         channel.send(text)
         if (interaction){
             interaction.reply({
