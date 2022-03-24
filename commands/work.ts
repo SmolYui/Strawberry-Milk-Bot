@@ -16,6 +16,7 @@ export default {
         await addBal(key,workValue)
         interaction.reply({
             content: `<@${member.user.id}> Earned: ${workValue}`,
+            allowedMentions: { "parse": [] },
             ephemeral: true
         })
         console.log(`[${guild.name}] ${interaction.user.username}#${interaction.user.discriminator}(${interaction.user.id}) earned ${workValue}.`)
