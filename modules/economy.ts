@@ -9,12 +9,13 @@ async function newAccount(key: string) {
     }, {
         upsert: true
     })
+    console.log("created new balance account")
 }
 
 async function fetchAccount(key: string): Promise<number> {
     const results = await balSchema.findById(key)
     if (!results) {
-        newAccount(key)
+        await newAccount(key)
         return fetchAccount(key)
     }
     return results.value

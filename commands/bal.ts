@@ -20,13 +20,13 @@ export default {
         const guild = interaction.guild!
         const user = interaction.options.getUser('user')||interaction.member!.user
         const key = String(String(guild.id) + String(user.id))
-        const currentBal = getBal(key)
+        const currentBal = await getBal(key)
         interaction.reply({
             content:`<@${user.id}> Balance: ${currentBal}`,
             allowedMentions: { "parse": [] },
             ephemeral: true
         })
-        console.log(`[${guild.name}] ${interaction.user.username + interaction.user.discriminator}(${interaction.user.id}) requested balance: ${currentBal}.`)
+        console.log(`[${guild.name}] ${interaction.user.username}#${interaction.user.discriminator}(${interaction.user.id}) requested balance: ${currentBal}.`)
         return
     }
 } as ICommand

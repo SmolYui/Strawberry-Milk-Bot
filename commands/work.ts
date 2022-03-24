@@ -13,12 +13,12 @@ export default {
         const member =interaction.member!
         const key = String(String(guild.id) + String(member.user.id))
         let workValue = 50
-        addBal(key,workValue)
+        await addBal(key,workValue)
         interaction.reply({
             content: `<@${member.user.id}> Earned: ${workValue}`,
             ephemeral: true
         })
-        console.log(`[${guild.name}] ${member.user.username + member.user.discriminator}(${member.user.id}) earned ${workValue}.`)
+        console.log(`[${guild.name}] ${interaction.user.username}#${interaction.user.discriminator}(${interaction.user.id}) earned ${workValue}.`)
         return
         
     }
