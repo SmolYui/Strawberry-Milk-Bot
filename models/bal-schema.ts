@@ -2,9 +2,10 @@ import mongoose, {Schema} from "mongoose";
 
 const balSchema = new Schema({
     // Guild ID + User ID
-    _id: {
+    id: {
         type: {guildId:String,userId:String},
-        required: true
+        required: true,
+        unique: true
     },
     value: {
         type: Number,

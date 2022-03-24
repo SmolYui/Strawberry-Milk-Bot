@@ -4,9 +4,8 @@ type keyType = {guildId:String, userId:String}
 
 async function newAccount(key: keyType) {
     await balSchema.findOneAndUpdate({
-        _id: key
+        id: key
     }, {
-        _id: key,
         value: 0,
     }, {
         upsert: true
@@ -33,7 +32,7 @@ export async function addBal(key: keyType, amount: number) {
     const add = amount > 0 ? amount : 0
     const newValue = bal + add
     await balSchema.findOneAndUpdate({
-        _id: key
+        id: key
     }, {
         value: newValue,
     })
@@ -44,7 +43,7 @@ export async function subBal(key: keyType, amount: number) {
     if (bal - amount < 0 ) return false
     const newValue = bal - amount
     await balSchema.findOneAndUpdate({
-        _id: key
+        id: key
     }, {
         value: newValue,
     })
