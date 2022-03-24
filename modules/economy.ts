@@ -1,8 +1,6 @@
 import balSchema from "../models/bal-schema";
 
-type keyType = {guildId:String, userId:String}
-
-async function newAccount(key: keyType) {
+async function newAccount(key: string) {
     await balSchema.findOneAndUpdate({
         id: key
     }, {
@@ -13,7 +11,7 @@ async function newAccount(key: keyType) {
     console.log("created new balance account")
 }
 
-async function fetchAccount(key: keyType): Promise<number> {
+async function fetchAccount(key: string): Promise<number> {
     const results = await balSchema.findById(key)
     if (!results) {
         await newAccount(key)
@@ -22,12 +20,12 @@ async function fetchAccount(key: keyType): Promise<number> {
     return results.value
 }
 
-export async function getBal(key: keyType): Promise<number> {
+export async function getBal(key: string): Promise<number> {
     const bal = await fetchAccount(key)
     return bal
 }
 
-export async function addBal(key: keyType, amount: number) {
+export async function addBal(key: string, amount: number) {
     const bal = await fetchAccount(key)
     const add = amount > 0 ? amount : 0
     const newValue = bal + add
@@ -38,7 +36,7 @@ export async function addBal(key: keyType, amount: number) {
     })
 }
 
-export async function subBal(key: keyType, amount: number) {
+export async function subBal(key: string, amount: number) {
     const bal = await fetchAccount(key)
     if (bal - amount < 0 ) return false
     const newValue = bal - amount
