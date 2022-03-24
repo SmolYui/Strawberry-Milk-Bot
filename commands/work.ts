@@ -1,3 +1,4 @@
+import {MessageEmbed } from "discord.js";
 import { ICommand } from "wokcommands";
 import {addBal} from "../modules/economy"
 
@@ -8,14 +9,21 @@ export default {
     slash:true,
     testOnly:true,
 
-    callback: async ( {interaction})=>{
+    callback: async ( {interaction,client})=>{
         const guild = interaction.guild!
         const member =interaction.member!
         const key = String(String(guild.id) + String(member.user.id))
         let workValue = 50
         await addBal(key,workValue)
+
+        const workEmbed = new MessageEmbed()
+        .setColor('#f6a5b6')
+        .setAuthor({name:`${interaction.user.username}#${interaction.user.discriminator}`, iconURL:interaction.user.avatarURL()!})
+        .setDescription(`For your hard work you earned ${workValue}\:strawberry:!`)
+
+
         interaction.reply({
-            content: `<@${member.user.id}> Earned: ${workValue}`,
+            embeds: [workEmbed],
             allowedMentions: { "parse": [] },
             ephemeral: true
         })

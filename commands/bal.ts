@@ -1,4 +1,4 @@
-import { Channel, GuildEmoji, User } from "discord.js";
+import { Channel, GuildEmoji, MessageEmbed, User } from "discord.js";
 import { ICommand } from "wokcommands";
 import balSchema from "../models/bal-schema";
 import { getBal } from "../modules/economy";
@@ -21,8 +21,15 @@ export default {
         const user = interaction.options.getUser('user')||interaction.member!.user
         const key = String(String(guild.id) + String(user.id))
         const currentBal = await getBal(key)
+
+        
+        const balEmbed = new MessageEmbed()
+        .setColor('#f6a5b6')
+        .setAuthor({name:`${interaction.user.username}#${interaction.user.discriminator}`, iconURL:interaction.user.avatarURL()!})
+        .addField('Balance:',`${currentBal}\:strawberry:`)
+
         interaction.reply({
-            content:`<@${user.id}> Balance: ${currentBal}`,
+            embeds: [balEmbed],
             allowedMentions: { "parse": [] },
             ephemeral: true
         })
