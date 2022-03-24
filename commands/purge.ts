@@ -27,7 +27,7 @@ export default {
             ephemeral: true
         })
 
-        console.log(`[${interaction.guild?.name}][${channel.name}] ${interaction.user.username + interaction.user.discriminator}(${interaction.user.id}) purged ${size} message${size > 1 ? 's':''}.`)
+        console.log(`[${interaction.guild?.name}][${channel.name}] ${interaction.user.username}#${interaction.user.discriminator}(${interaction.user.id}) purged ${size} message${size > 1 ? 's':''}.`)
         return
     }
 
