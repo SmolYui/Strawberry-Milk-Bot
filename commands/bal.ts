@@ -1,6 +1,7 @@
 import { Channel, GuildEmoji, User } from "discord.js";
 import { ICommand } from "wokcommands";
 import balSchema from "../models/bal-schema";
+import { getBal } from "../modules/economy";
 
 
 export default { 
@@ -15,38 +16,17 @@ export default {
     slash:true,
     testOnly:true,
 
-    callback: async ( {interaction, args})=>{
+    callback: async ( {interaction})=>{
         const guild = interaction.guild!
         const user = interaction.options.getUser('user')||interaction.member!.user
         const key = String(String(guild.id) + String(user.id))
-
-
-
-
-            const results = await balSchema.findById(key)
-            if(!results){
-                await balSchema.findOneAndUpdate({
-                    _id: key
-                }, {
-                    _id: key,
-                    value:0,
-                },{
-                    upsert: true
-                })
-                interaction.reply({
-
-                content:`<@${user.id}> Balance: 0`,
-                allowedMentions: { "parse": [] },
-            })
-            }
-
-            let currentBal = results.value
-
+        const currentBal = getBal(key)
         interaction.reply({
-
             content:`<@${user.id}> Balance: ${currentBal}`,
             allowedMentions: { "parse": [] },
-        })    
+            ephemeral: true
+        })
+        console.log(`[${guild.name}] ${interaction.user.username + interaction.user.discriminator}(${interaction.user.id}) requested balance: ${currentBal}.`)
         return
     }
 } as ICommand
