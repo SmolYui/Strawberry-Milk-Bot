@@ -19,10 +19,11 @@ A cute multipurpose discord bot being developed by Yui#0001
     - 8 ball generator
     - Gif Actions (Hug, Pat, Kiss, Handhold, Boop, etc.)
 - Economy
-    - Currency☑ - in progress
-    - Working☑ - in progress
-    - Balance☑ - in progress
+    - Currency☑ - in progress (todo: customisable currency format and emote icon, per server)
+    - Working☑ - in progress (todo: customisable yeild range, per server)
+    - Balance☑ - in progress 
     - Shop
+    - Leaderboard - in progress (todo: pages)
 
 - Any other commands deemed fun, useful, cute, productive, cute, or cute.
 
