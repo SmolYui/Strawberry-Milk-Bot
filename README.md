@@ -23,7 +23,7 @@ A cute multipurpose discord bot being developed by Yui#0001
     - Working☑ - in progress (todo: customisable yeild range, per server)
     - Balance☑ - in progress 
     - Shop
-    - Leaderboard - in progress (todo: pages)
+    - Leaderboard☑ - in progress (todo: pages)
 
 - Any other commands deemed fun, useful, cute, productive, cute, or cute.
 
