@@ -25,4 +25,6 @@ A cute multipurpose discord bot being developed by Yui#0001
     - Shop
 
 - Any other commands deemed fun, useful, cute, productive, cute, or cute.
+
+#### This is my first project using Typscript or Javascript, so it's probably really badly made.
     
