@@ -1,3 +1,4 @@
+//Yui Neko 2022
 import balSchema from "../models/bal-schema";
 
 type account = { guildId: string, userId: string, bal: number } 
