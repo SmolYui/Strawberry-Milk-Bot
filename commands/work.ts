@@ -5,7 +5,6 @@ import {addBal} from "../modules/economy"
 export default { 
     category: 'Currency',
     description: 'Earns you money!',
-
     slash:true,
     testOnly:true,
 
@@ -13,7 +12,9 @@ export default {
         const guild = interaction.guild!
         const member =interaction.member!
         const key = String(String(guild.id) + String(member.user.id))
-        let workValue = 50
+        const max = 100
+        const min = 50
+        const workValue = Math.floor(Math.random()*(max - min +1))+min
         await addBal(key,workValue)
 
         const workEmbed = new MessageEmbed()
