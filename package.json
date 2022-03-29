@@ -8,13 +8,25 @@
     "dev": "nodemon index.ts"
   },
   "keywords": [],
-  "author": "",
+  "author": "Yui Neko",
   "license": "ISC",
   "dependencies": {
     "discord.js": "^13.6.0",
     "dotenv": "^16.0.0",
     "mongoose": "^6.2.2",
     "nodemon": "^2.0.15",
+    "ts-node": "^10.7.0",
     "wokcommands": "^1.5.3"
-  }
+  },
+  "devDependencies": {
+    "node": "^16.14.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SmolYui/Strawberry-Milk-Bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SmolYui/Strawberry-Milk-Bot/issues"
+  },
+  "homepage": "https://github.com/SmolYui/Strawberry-Milk-Bot#readme"
 }

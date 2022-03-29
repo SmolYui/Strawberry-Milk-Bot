@@ -1,7 +1,7 @@
 import { Channel, GuildEmoji, MessageEmbed, User } from "discord.js";
 import { ICommand } from "wokcommands";
 import balSchema from "../models/bal-schema";
-import { getBal } from "../modules/economy";
+import { getBal, parseCurrency} from "../modules/economy";
 
 
 export default { 
@@ -26,7 +26,7 @@ export default {
         const balEmbed = new MessageEmbed()
         .setColor('#f6a5b6')
         .setAuthor({name:`${interaction.user.username}#${interaction.user.discriminator}`, iconURL:interaction.user.avatarURL()!})
-        .addField('Balance:',`${currentBal}\:strawberry:`)
+        .addField('Balance:',`${parseCurrency(guild.id,currentBal)}`)
 
         interaction.reply({
             embeds: [balEmbed],

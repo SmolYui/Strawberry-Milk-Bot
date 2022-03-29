@@ -1,5 +1,6 @@
 //Yui Neko 2022
 import balSchema from "../models/bal-schema";
+import currencySchema from "../models/currency-schema"
 
 type account = { guildId: string, userId: string, bal: number } 
 
@@ -75,4 +76,16 @@ export async function top10(guildId: string) {
         .limit(10)
     console.log(top10Document)
     return top10Document
+}
+
+async function fetchSettings(guildId: string):Promise<{emote:string,leading:boolean}>{
+    const results = await currencySchema.findById(guildId)
+    const emote = results ? results.emote : ":strawberry:"
+    const leading = results ? results.leading : false
+    return {emote,leading}
+}
+
+export async function parseCurrency(guildId:string, value:number):Promise<string>{
+    const settings = await fetchSettings(guildId)
+    return `${settings.leading ? '\\' + settings.emote:""}${value}${!settings.leading ? '\\' + settings.emote:""}`
 }
