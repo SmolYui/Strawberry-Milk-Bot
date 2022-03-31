@@ -1,12 +1,12 @@
 import mongoose, {Schema} from "mongoose";
 
 const balSchema = new Schema({
-    // Guild ID + User ID
-    _id: {
+    
+    _id: {// GuildID + UserID
         type: String,
         required: true
     },
-    value: {
+    value: {// balance
         type: Number,
         required: true
     }

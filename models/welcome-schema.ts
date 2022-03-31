@@ -6,10 +6,9 @@ const reqString = {
 }
 
 const welcomeSchema = new Schema({
-    // Guild ID
-    _id: reqString,
-    channelId: reqString,
-    text: reqString
+    _id: reqString, // Guild ID
+    channelId: reqString, //Welcome channel
+    text: reqString //Welcome message
 })
 
 const name = 'welcome-config'
