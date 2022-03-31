@@ -26,7 +26,7 @@ export default {
         const balEmbed = new MessageEmbed()
         .setColor('#f6a5b6')
         .setAuthor({name:`${interaction.user.username}#${interaction.user.discriminator}`, iconURL:interaction.user.avatarURL()!})
-        .addField('Balance:',`${parseCurrency(guild.id,currentBal)}`)
+        .addField('Balance:',`${await parseCurrency(guild.id,currentBal)}`)
 
         interaction.reply({
             embeds: [balEmbed],

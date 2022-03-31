@@ -1,6 +1,6 @@
 import {MessageEmbed } from "discord.js";
 import { ICommand } from "wokcommands";
-import {addBal, parseCurrency} from "../modules/economy"
+import {addBal} from "../modules/economy"
 
 export default { 
     category: 'Currency',
@@ -20,13 +20,13 @@ export default {
         const workEmbed = new MessageEmbed()
         .setColor('#f6a5b6')
         .setAuthor({name:`${interaction.user.username}#${interaction.user.discriminator}`, iconURL:interaction.user.avatarURL()!})
-        .setDescription(`For your hard work you earned ${parseCurrency(guild.id,workValue)}`)
+        .setDescription(`For your hard work you earned ${workValue}\:strawberry:!`)
 
 
         interaction.reply({
             embeds: [workEmbed],
             allowedMentions: { "parse": [] },
-            ephemeral: true
+            ephemeral: true,
         })
         console.log(`[${guild.name}] ${interaction.user.username}#${interaction.user.discriminator}(${interaction.user.id}) earned ${workValue}.`)
         return
