@@ -82,10 +82,11 @@ async function fetchSettings(guildId: string):Promise<{emote:string,leading:bool
     const results = await currencySchema.findById(guildId)
     const emote = results ? results.emote : ":strawberry:"
     const leading = results ? results.leading : false
-    return {emote,leading}
+    return {emote,leading}  
 }
+
 
 export async function parseCurrency(guildId:string, value:number):Promise<string>{
     const settings = await fetchSettings(guildId)
-    return `${settings.leading ? '\\' + settings.emote:""}${value}${!settings.leading ? '\\' + settings.emote:""}`
+    return `${settings.leading ? settings.emote:""}${value}${!settings.leading ? settings.emote:""}`
 }
