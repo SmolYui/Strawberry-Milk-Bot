@@ -1,6 +1,6 @@
 import balSchema from "../models/bal-schema";
 
-type account = { guildId: string, userId: string, bal: number } 
+type account = { guildId: string, userId: string, bal: number }
 
 async function newAccount(key: string) {
     await balSchema.findOneAndUpdate({
@@ -72,6 +72,6 @@ export async function top10(guildId: string) {
         .regex(new RegExp(`${guildId}`))
         .sort({ 'value': -1 })
         .limit(10)
-    console.log(top10Document)
-    return top10Document
+
+        return top10Document
 }
