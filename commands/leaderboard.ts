@@ -1,6 +1,6 @@
 import { MessageEmbed } from "discord.js";
 import { ICommand } from "wokcommands";
-import {getUserId, top10} from "../modules/economy";
+import {getUserId, top10, parseCurrency} from "../modules/economy";
 
 
 export default { 
@@ -19,7 +19,7 @@ export default {
             let doc = Top10[i]
             let entry = "none"
             if(doc){
-                entry = `<@${ await getUserId(doc._id)}>: ${doc.value}\:strawberry:`
+                entry = `<@${ await getUserId(doc._id)}>: ${await parseCurrency(guild.id,doc.value)}`
             }
             description = description+entry            
         }

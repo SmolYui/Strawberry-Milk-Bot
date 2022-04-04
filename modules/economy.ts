@@ -8,14 +8,15 @@ async function newAccount(key: string) {
     await balSchema.findOneAndUpdate({
         _id: key
     }, {
-        value: 0,
-    }, {
-        upsert: true
-    })
+            value: 0,
+        }, {
+            upsert: true
+        })
     console.log("created new balance account")
 }
 
-async function fetchAccount(key: string): Promise<account> {
+async function fetchAccount(guildId:string, userId:string): Promise<account> {
+    const key = parseKey(guildId, userId)
     const results = await balSchema.findById(key)
     if (!results) {
         await newAccount(key)
@@ -33,19 +34,21 @@ export async function getGuildId(key: string): Promise<string> {
     return guildId
 }
 
-export async function getUserId(key: string): Promise<string> {
+export async function getUserId(key:string): Promise<string> {
     const account = await fetchAccount(key)
     const userId = account.userId
     return userId
 }
 
-export async function getBal(key: string): Promise<number> {
+export async function getBal(guildId:string, userId:string): Promise<number> {
+    const key = parseKey(guildId, userId)
     const account = await fetchAccount(key)
     const bal = account.bal
     return bal
 }
 
-export async function addBal(key: string, amount: number) {
+export async function addBal(guildId: string, userId: string, amount: number) {
+    const key = parseKey(guildId, userId)
     const account = await fetchAccount(key)
     const bal = account.bal
     const add = amount > 0 ? amount : 0
@@ -53,11 +56,12 @@ export async function addBal(key: string, amount: number) {
     await balSchema.findOneAndUpdate({
         _id: key
     }, {
-        value: newValue,
-    })
+            value: newValue,
+        })
 }
 
-export async function subBal(key: string, amount: number) {
+export async function subBal(guildId:string, userId:string, amount: number) {
+    const key = parseKey(guildId, userId)
     const account = await fetchAccount(key)
     const bal = account.bal
     if (bal - amount < 0) return false
@@ -65,8 +69,8 @@ export async function subBal(key: string, amount: number) {
     await balSchema.findOneAndUpdate({
         _id: key
     }, {
-        value: newValue,
-    })
+            value: newValue,
+        })
 }
 export async function top10(guildId: string) {
     const top10Document = await balSchema.find()
@@ -78,15 +82,19 @@ export async function top10(guildId: string) {
     return top10Document
 }
 
-async function fetchSettings(guildId: string):Promise<{emote:string,leading:boolean}>{
+async function fetchSettings(guildId: string): Promise<{ emote: string, leading: boolean }> {
     const results = await currencySchema.findById(guildId)
     const emote = results ? results.emote : ":strawberry:"
     const leading = results ? results.leading : false
-    return {emote,leading}  
+    return { emote, leading }
 }
 
 
-export async function parseCurrency(guildId:string, value:number):Promise<string>{
+export async function parseCurrency(guildId: string, value: number): Promise<string> {
     const settings = await fetchSettings(guildId)
-    return `${settings.leading ? settings.emote:""}${value}${!settings.leading ? settings.emote:""}`
+    return `${settings.leading ? settings.emote : ""}${value}${!settings.leading ? settings.emote : ""}`
+}
+function parseKey(guildId: string, userId: string): string {
+    const key = `${guildId}${userId}`
+    return key
 }

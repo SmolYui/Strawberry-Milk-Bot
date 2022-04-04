@@ -19,8 +19,7 @@ export default {
     callback: async ( {interaction})=>{
         const guild = interaction.guild!
         const user = interaction.options.getUser('user')||interaction.member!.user
-        const key = String(String(guild.id) + String(user.id))
-        const currentBal = await getBal(key)
+        const currentBal = await getBal(guild.id,user.id)
 
         
         const balEmbed = new MessageEmbed()
